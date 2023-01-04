@@ -9,6 +9,7 @@
     Quotes from the <a href="https://github.com/Mikaayenson/WiseYoda">Wise Yoda</a>
   </p>
 
+
 <!-- Badges -->
 
 [![Supported Python versions](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
@@ -32,7 +33,10 @@ Simple library to obtain wisdom from the wise Master Yoda in the form of quotes.
 ### :camera: Screenshots
 
 <p align="center">
-  <!-- <img width="969" alt="Terminal Output" src=""> -->
+<img width="710" alt="Help" src="https://user-images.githubusercontent.com/1636709/210474079-0fd9c801-d6ba-4c87-8244-41a4c4ba5ed1.png">
+<img width="710" alt="Simple" src="https://user-images.githubusercontent.com/1636709/210474075-5ad35761-5765-49e7-ae22-62ff4aec85e1.png">
+<img width="710" alt="Complex" src="https://user-images.githubusercontent.com/1636709/210474078-d8c3c528-9bc6-4934-a970-4d372e3202a1.png">
+
 </p>
 
 <!-- Getting Started -->
@@ -91,8 +95,9 @@ Run wiseyoda
 <!-- Development -->
 ### :construction: Development
 
+
 <div align="center">
-  <!-- <img width="969" alt="Make Help" src=""> -->
+  <img width="710" alt="makefile" src="https://user-images.githubusercontent.com/1636709/210474182-474a778f-9267-4e7c-84d3-3edb48cc9f8a.png">
 </div>
 
 Install pre-commit
