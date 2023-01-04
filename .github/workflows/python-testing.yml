@@ -1,0 +1,63 @@
+name: Python Testing
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "*" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Mikaayenson/WiseYoda
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          lfs: true
+
+      - name: Cache poetry install
+        uses: actions/cache@v2
+        with:
+          path: ~/.local
+          key: poetry-1.2.2-0
+
+      - name: Install and configure Poetry
+        uses: snok/install-poetry@v1
+        with:
+          version: 1.2.2
+          virtualenvs-create: true
+          virtualenvs-in-project: true
+
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v3
+        with:
+          python-version: 3.10.0
+          cache: 'poetry'
+
+      - name: Cache python WiseYoda deps
+        id: cache-deps
+        uses: actions/cache@v2
+        with:
+          path: .venv
+          key: pydeps-${{ hashFiles('**/poetry.lock') }}
+
+      - run: poetry install --no-interaction --no-root
+        if: steps.cache-deps.outputs.cache-hit != 'true'
+
+      - name: Install python package dependencies
+        run: |
+          poetry install --no-interaction --no-ansi -vvv
+
+      - name: Lint WiseYoda
+        run: make check
+
+      - name: Test WiseYoda
+        run: |
+          make test
+
+      - name: Show WiseYoda Version
+        run: |
+          poetry run wiseyoda --help
