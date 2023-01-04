@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "wiseyoda"
-version = "0.1.0"
+version = "1.0.0"
 description = "Quote the wise and powerful master Yoda."
 authors = ["Mika Ayenson <Mika.ayenson@elastic.co>"]
 license = "Apache 2.0"
