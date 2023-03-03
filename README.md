@@ -1,7 +1,7 @@
 #
 
 <div align="center">
-  <img width="1072" alt="logo" src="https://user-images.githubusercontent.com/1636709/210475936-9943ee5d-6bec-488d-a309-7a0df2312291.png">
+  <img width="500" alt="logo" src="https://user-images.githubusercontent.com/1636709/210475936-9943ee5d-6bec-488d-a309-7a0df2312291.png">
   <h1>WiseYoda</h1>
 
   <p>
