@@ -2,62 +2,46 @@ name: Python Testing
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [main]
   pull_request:
-    branches: [ "*" ]
+    branches: [main]
 
 jobs:
-  build:
-
+  test:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.11", "3.12", "3.13"]
 
     steps:
-      - name: Checkout Mikaayenson/WiseYoda
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
         with:
-          fetch-depth: 0
-          lfs: true
+          version: "latest"
 
-      - name: Cache poetry install
-        uses: actions/cache@v2
+      - name: Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
         with:
-          path: ~/.local
-          key: poetry-1.2.2-0
+          python-version: ${{ matrix.python-version }}
 
-      - name: Install and configure Poetry
-        uses: snok/install-poetry@v1
-        with:
-          version: 1.2.2
-          virtualenvs-create: true
-          virtualenvs-in-project: true
+      - name: Sync deps
+        run: uv sync --extra dev --extra api --python ${{ matrix.python-version }}
 
-      - name: Set up Python 3.8
-        uses: actions/setup-python@v3
-        with:
-          python-version: 3.8
-          cache: 'poetry'
-
-      - name: Cache python WiseYoda deps
-        id: cache-deps
-        uses: actions/cache@v2
-        with:
-          path: .venv
-          key: pydeps-${{ hashFiles('**/poetry.lock') }}
-
-      - run: poetry install --no-interaction --no-root
-        if: steps.cache-deps.outputs.cache-hit != 'true'
-
-      - name: Install python package dependencies
+      # Pin interpreter on every `uv run` so `.python-version` does not recreate the venv mid-job.
+      - name: Ruff (lint + format)
         run: |
-          poetry install --no-interaction --no-ansi -vvv
+          uv run --python ${{ matrix.python-version }} ruff check wise_yoda tests
+          uv run --python ${{ matrix.python-version }} ruff format --check wise_yoda tests
 
-      - name: Lint WiseYoda
-        run: make check
+      - name: Tests
+        run: uv run --python ${{ matrix.python-version }} pytest
 
-      - name: Test WiseYoda
+      - name: Build package
+        run: uv build
+
+      - name: CLI smoke
         run: |
-          make test
-
-      - name: Show WiseYoda Version
-        run: |
-          poetry run wiseyoda --help
+          uv run --python ${{ matrix.python-version }} wiseyoda stats
+          uv run --python ${{ matrix.python-version }} wiseyoda version

@@ -1,18 +1,5 @@
-"""WiseYoda package."""
-from .wisdom import (  # noqa: E402,
-    QUOTELISTSCHEMA,
-    QUOTES_DB,
-    QUOTESCHEMA,
-    QuoteList,
-    Quotes,
-    QuoteSchema,
-)
+"""WiseYoda: bundled Yoda-style lessons and a small CLI."""
 
-__all__ = (
-    "Quotes",
-    "QuoteList",
-    "QuoteSchema",
-    "QUOTES_DB",
-    "QUOTESCHEMA",
-    "QUOTELISTSCHEMA",
-)
+from .wisdom import QUOTES_DB, Quote, QuoteBundle, Quotes, resolve_quotes_path
+
+__all__ = ("QUOTES_DB", "Quote", "QuoteBundle", "Quotes", "resolve_quotes_path")
